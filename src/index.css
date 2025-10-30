@@ -3,7 +3,19 @@
 
 @import "tailwindcss";
 
+.link{
+  color :white;
+    text-decoration: none; /* remove underline */
+}
 
+.link:hover{
+   color :rgb(223, 210, 210);
+    text-decoration: none; /* remove underline */
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -43,18 +55,16 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius:0 5px 5px 0;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
-  font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: #c9bd1a;
 }
 button:focus,
 button:focus-visible {
@@ -72,4 +82,33 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+@keyframes animate {
+   0%, 10%{
+    transform: translate(0%);
+  }
+  25%{
+    transform: translate(-100%);
+  }
+  40%{
+    transform: translate(-200%);
+  }
+  55%{
+    transform: translate(-300%);
+  }
+  70%{
+    transform: translate(-400%);
+  }
+  85%{
+    transform: translate(-500%);
+  }
+  100%{
+    transform: translate(-0%);
+  }
+}
+
+.scroll-Ani {
+  animation: animate 30s cubic-bezier(0.6, 0.05, 0.1, 0.9) infinite  ;
 }
