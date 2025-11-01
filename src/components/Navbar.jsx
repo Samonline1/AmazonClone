@@ -17,9 +17,9 @@ const Navbar = () => {
   ];
 
   return (
-    <div className=" w-full h-24">
+    <div className="w-full">
       {/* main nav */}
-      <nav className="flex h-15 w-full p-4 mt-3 justify-between items-center space-x-5">
+      <nav className="flex sticky top-0 z-50 h-15 w-full p-4 mt-3 justify-between items-center space-x-5 bg-black">
         {/* <div className='flex w-full w-62 h-10' >
          <img className='w-full h-full object-center flex-shrink-0' src="https://freelogopng.com/images/all_img/1688364164amazon-logo-transparent.png" alt="" srcSet="" /> 
         </div> */}
@@ -123,6 +123,8 @@ const Navbar = () => {
 </a> */}
         </nav>
       </div>
+
+
     </div>
   );
 };
