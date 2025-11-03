@@ -252,7 +252,7 @@ useEffect(() => {
 </div>
 
 
-  <div className="z-10 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-10 w-[95%] overflow-visible justify-center items-center mt-[-20%]">
+  <div className="z-10 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-10 w-[95%] overflow-visible justify-center items-center mt-[-20%]">
 
 
 {CategoryOffers && CategoryOffers.map((category, index) =>  (
@@ -321,12 +321,12 @@ useEffect(() => {
           <p className="realtive w-[95%] text-3xl text-black font-bold w-[80%] py-10">Products</p>
 
 
- <div className="grid grid-cols-6 gap-7 w-[95%] ">
+ <div className="grid grid-cols-5 lg:grid-cols-6 gap-6 w-[95%] ">
 
       {products.map(product => (
-        <div key={product.id} className="p-4 bg-white shadow rounded">
-          <img src={product.thumbnail} alt={product.title} className="w-full h-50 object-cover" />
-          <h2 className="mt-2 font-bold">{product.title}</h2>
+        <div key={product.id} className="h-70 w-40 p-4 bg-white shadow rounded">
+          <img src={product.thumbnail} alt={product.title} className="object-cover" />
+          <h2 className="mt-2 font-bold text-gray-700">{product.title}</h2>
           <p className="text-gray-600">${product.price}</p>
         </div>
       ))}

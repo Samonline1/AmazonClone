@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { SlLocationPin } from "react-icons/sl";
 import { BsSearch } from "react-icons/bs";
 import ReactFlagsSelect from "react-flags-select";
-
 import { LuShoppingCart } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [input, setInput] = useState("");
@@ -16,10 +15,16 @@ const Navbar = () => {
     { name: "Electronics", link: "/electronics" },
   ];
 
+  const navigate = useNavigate();
+
+  const searchProducts = (search)=>{
+    navigate(`/search/${search}`)
+  }
+
   return (
-    <div className="w-full">
+    <div className="w-screen h-full">
       {/* main nav */}
-      <nav className="flex sticky top-0 z-50 h-15 w-full p-4 mt-3 justify-between items-center space-x-5 bg-black">
+      <nav className="flex sticky top-0 z-20 h-full w-full p-4 items-center space-x-5 bg-black">
         {/* <div className='flex w-full w-62 h-10' >
          <img className='w-full h-full object-center flex-shrink-0' src="https://freelogopng.com/images/all_img/1688364164amazon-logo-transparent.png" alt="" srcSet="" /> 
         </div> */}
@@ -57,7 +62,9 @@ const Navbar = () => {
             onChange={(e) => setInput(e.target.value)}
           />
 
-          <button className="bg-yellow-500 text-white">
+          <button
+          onClick={()=> searchProducts(input)}
+           className="bg-yellow-500 text-white">
             <BsSearch />
           </button>
         </div>
