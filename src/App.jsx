@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import SearchResults from "./components/SearchResults";
 import ProductDetails from "./components/ProductDetails";
+import CatergoryResults from "./components/CatergoryResults";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,15 @@ const router = createBrowserRouter([
       <div>
         <Navbar />
         <ProductDetails />
+      </div>
+    ),
+  },
+   {
+    path: "/category/:name",
+    element: (
+      <div>
+        <Navbar />
+        <CatergoryResults />
       </div>
     ),
   },

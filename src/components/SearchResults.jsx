@@ -30,7 +30,10 @@ const SearchResults = () => {
     
 
   return (
-    <div className='h-full w-full m-0 bg-red-900'>
+    <div className='h-full w-full m-0'>
+        <div className='w-screen h-full flex justify-end'>
+            <img src="https://m.media-amazon.com/images/G/31/img23/Wireless/nbshagun/16thJuly/Banner_1.gif" alt="" srcset="" />
+        </div>
 
 
          {/* <div className='w-full h-full flex '>
@@ -50,7 +53,10 @@ const SearchResults = () => {
         </div> */}
 
 
-
+<div>
+    <b>Shop by categrory </b>
+    {/* <a href="http://"></a> */}
+</div>
 
 
        {products && products.length > 0 && (
