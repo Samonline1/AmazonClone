@@ -4,6 +4,9 @@ import Home from "./components/Home";
 import SearchResults from "./components/SearchResults";
 import ProductDetails from "./components/ProductDetails";
 import CatergoryResults from "./components/CatergoryResults";
+import SignUp from "./components/SignUp";
+import Profile from "./components/Profile";
+import Cart from "./components/Cart";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +42,32 @@ const router = createBrowserRouter([
       <div>
         <Navbar />
         <CatergoryResults />
+      </div>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <div>
+        <SignUp/>
+      </div>
+    ),
+  },
+   {
+    path: "/profile",
+    element: (
+      <div>
+        <Navbar />
+        <Profile/>
+      </div>
+    ),
+  },
+  {
+    path: "/cart",
+    element: (
+      <div>
+        <Navbar />
+        <Cart/>
       </div>
     ),
   },

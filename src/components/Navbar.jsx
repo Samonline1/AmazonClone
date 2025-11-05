@@ -6,6 +6,10 @@ import { LuShoppingCart } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+   const user = JSON.parse(localStorage.getItem("user"));
+
+   
   const [input, setInput] = useState("");
   const [selected, setSelected] = useState("IN");
   const [show, setShow] = useState(false)
@@ -49,10 +53,12 @@ const categories = [
     ${show ? "translate-x-0 opacity-100" : "opacity-0"}
 `}
       >
-  <div className="flex font-bold items-center flex h-13 w-full bg-gray-900 text-white px-10 gap-2 text-xl">
+  <div className="flex font-bold items-center flex h-13 w-full bg-gray-900 text-white px-10 gap-2 text-xl"
+  onClick={()=> navigate(`/profile`)}
+  >
    <img className="w-7 h-7"
    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png" alt="" srcset="" />
-    <h3>Hello, sign in</h3>
+    <h3>Hello, {user?.username || "Login"}</h3>
     <p className="flex justify-center items-center absolute right-[-50px] p-3 border h-10 w-10 rounded bg-black/50" onClick={()=> setShow(false)}>X</p>
   </div>
 <div className="flex flex-col relative h-screen z-50 bg-white text-gray-900 p-10 w-full gap-5">
@@ -88,6 +94,7 @@ const categories = [
 
         <div className="flex items-center w-32 h-12">
           <img
+          onClick={()=> navigate(`/`)}
             src="https://freelogopng.com/images/all_img/1688364164amazon-logo-transparent.png"
             alt="Amazon logo"
             className="w-32 h-12 object-contain flex-shrink-0"
@@ -113,7 +120,7 @@ const categories = [
 
           <button
           onClick={()=> searchProducts(input)}
-           className="bg-yellow-500 text-white">
+           className="rounded-tr-md rounded-br-md rounded-tl-none rounded-bl-none text-black font-bold">
             <BsSearch />
           </button>
         </div>
@@ -153,7 +160,9 @@ const categories = [
 
           </div>
           <div>
-            <p className="text-sm">Hello, X</p>
+            <p 
+            onClick={()=> navigate(`/login`)}
+            className="text-sm ">Hello, {user?.username || "Login"}</p>
             <p className="font-bold">Account & Lists</p>
           </div>
           <div>
