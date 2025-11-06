@@ -27,30 +27,58 @@ const SearchResults = () => {
 
     const navigate = useNavigate();
     
+  let user = JSON.parse(localStorage.getItem("user")) || { username: "guest", favorite: [] };
+    
+    
+
+    function addtoCart(id) {
+        const pID = id;
+        alert(pID);
+
+        if (pID) {
+            alert(user.username);
+            const searchResults = async () => {
+            try {
+                const searchApi = await fetch(`https://dummyjson.com/products/${pID}`);
+                const resultData = await searchApi.json();
+console.log(resultData);
+
+                const cart = {
+                    id : resultData.id,
+                    title : resultData.title,
+                    price : resultData.price,
+                    img : resultData.thumbnail,
+                    stock : resultData.availabilityStatus,
+                    ship : resultData.shippingInformation,
+                }
+console.log(cart.title);
+
+if (!user.favorite) user.favorite = [];
+
+user.favorite.push(cart);
+
+localStorage.setItem("user", JSON.stringify(user)) // object to json srting 
+
+console.log("hogya dd");
+console.log(user.favorite[0]);
+
+                
+            } catch (error) {
+                console.log("No products found...");
+            }
+        };
+searchResults();
+        }
+        
+        
+    }
     
 
   return (
     <div className='h-full w-full m-0'>
         <div className='w-screen h-full flex justify-end'>
-            <img src="https://m.media-amazon.com/images/G/31/img23/Wireless/nbshagun/16thJuly/Banner_1.gif" alt="" srcset="" />
+            <img src="https://m.media-amazon.com/images/G/31/img23/Wireless/nbshagun/16thJuly/Banner_1.gif" alt="" srcSet="" />
         </div>
-
-
-         {/* <div className='w-full h-full flex '>
-            <div className='flex w-[50%] justify-center items-center h-80 bg-white'>
-                <img
-                className='p-10'
-                 src="https://m.media-amazon.com/images/I/61egMfcDWlL._AC_UY218_.jpg" alt="" srcSet="" />
-            </div>
-            <div className='w-full h-80 bg-white text-black p-6 space-y-2'> 
-                <p className='text-lg'>FUR JADEN Anti Theft Number Lock Backpack Bag with 15.6 Inch Laptop Compartment, USB Charging Port & Organizer Pocket for Men Women Boys Girls</p>
-                <p className='text-sm'>4.04.0 out of 5 stars (12.1K)</p>
-                <p className='text-md'>7K+ bought in past month</p>
-                <p className='text-sm'>₹ <span className='text-xl'>699</span> M.R.P: ₹2,000M.R.P: ₹2,000 (65% off)</p>
-                <p className='text-md'>FREE delivery Fri, 7 Nov</p>
-                <button className='text-md'>Add to cart</button>
-            </div>
-        </div> */}
 
 
 <div>
@@ -75,7 +103,9 @@ const SearchResults = () => {
                 <p className='p-1 text-center bg-red-700 text-white rounded w-35'>Limited time deal</p>
                 <p className='text-sm text-gray-500'><span className='text-xl text-black'>₹{(product.price * 80).toFixed(2)}</span> M.R.P: <span className='line-through text-gray-500'>{(((product.price / 100 * 80) * (product.discountPercentage)) + (product.price * 80)).toFixed(2) } </span> <span className='text-black'>{product.discountPercentage}% off</span></p>
                 <p className='text-md'>{product.shippingInformation}</p>
-                <button className='text-md'>Add to cart</button>
+                <button
+                onClick={(e)=> addtoCart(product.id)}
+                 className='text-md'>Add to cart</button>
             </div>
         </div>
         ))

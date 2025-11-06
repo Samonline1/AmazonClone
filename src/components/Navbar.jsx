@@ -169,7 +169,9 @@ const categories = [
             <p className="text-sm">Returns</p>
             <p className="font-bold">& Orders</p>
           </div>
-          <div className="text-[40px]">
+          <div
+          onClick={()=> navigate(`/cart`)}
+           className="text-[40px]">
             <LuShoppingCart />
           </div>
         </div>
