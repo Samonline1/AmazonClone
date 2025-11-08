@@ -327,7 +327,7 @@ useEffect(() => {
         <div key={product.id} className="h-70 w-40 p-4 bg-white shadow rounded">
           <img src={product.thumbnail} alt={product.title} className="object-cover" />
           <h2 className="mt-2 font-bold text-gray-700">{product.title}</h2>
-          <p className="text-gray-600">${product.price}</p>
+          <p className="text-gray-600">₹{(product.price * 80).toFixed(1)}</p>
         </div>
       ))}
     </div>

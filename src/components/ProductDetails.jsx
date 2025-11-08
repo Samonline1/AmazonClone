@@ -6,6 +6,9 @@ const ProductDetails = () => {
 
     const [product, setProduct] = useState([]);
 
+        const users = JSON.parse(localStorage.getItem("users"));
+
+
     useEffect(() => {
         const searchResults = async () => {
             try {
@@ -20,6 +23,49 @@ const ProductDetails = () => {
 
         searchResults();
     }, [id]);
+
+
+
+    function addtoCart(id) {
+        const pID = id;
+        alert(pID);
+
+        if (pID) {
+            alert(users[0].username);
+            const searchResults = async () => {
+                try {
+                    const searchApi = await fetch(
+                        `https://dummyjson.com/products/${pID}`
+                    );
+                    const resultData = await searchApi.json();
+                    console.log(resultData);
+
+                    const cart = {
+                        id: resultData.id,
+                        title: resultData.title,
+                        price: resultData.price,
+                        img: resultData.thumbnail,
+                        stock: resultData.availabilityStatus,
+                        ship: resultData.shippingInformation,
+                    };
+                    console.log(cart.title);
+
+                    if (!users[0].favorite) users[0].favorite = [];
+
+                    users[0].favorite.push(cart);
+
+                    localStorage.setItem("users", JSON.stringify(users)); // object to json srting
+
+                    alert("hogya dd");
+                    console.log(users[0].favorite);
+                } catch (error) {
+                    console.log("No products found...");
+                }
+            };
+            searchResults();
+        }
+    }
+
 
     return (
             <div className="flex md:flex-row justify-center items-start gap-8 p-8 bg-gray-50 text-gray-900">
@@ -94,6 +140,11 @@ const ProductDetails = () => {
                         <p>Shipping: {product.shippingInformation}</p>
                         <p>Return Policy: {product.returnPolicy}</p>
                         <p>Warranty: {product.warrantyInformation}</p>
+
+                        <button 
+                onClick={(e)=> addtoCart(product.id)}
+
+                className='text-md'>Add to cart</button>
                     </div>
 
                     {/* Offers Section */}

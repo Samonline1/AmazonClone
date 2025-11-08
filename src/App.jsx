@@ -7,10 +7,20 @@ import CatergoryResults from "./components/CatergoryResults";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
 import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: (
+      <div>
+        <Navbar />
+        <Home />
+      </div>
+    ),
+  },
+  {
+    path: "/:username",
     element: (
       <div>
         <Navbar />
@@ -68,6 +78,15 @@ const router = createBrowserRouter([
       <div>
         <Navbar />
         <Cart/>
+      </div>
+    ),
+  },
+  {
+    path: "/checkout",
+    element: (
+      <div>
+        <Navbar />
+        <Checkout/>
       </div>
     ),
   },

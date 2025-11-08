@@ -4,21 +4,23 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 const CategoryResults = () => {
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const users = JSON.parse(localStorage.getItem("users"));
 
     const {name} = useParams();
     
     const [products, setProducts] = useState([]);
-    console.log(products);
+    console.log(name);
     
 
     useEffect(() => {
         const searchResults = async ()=>{
+          
+          
             try {
                 const searchApi = await fetch(`https://dummyjson.com/products/category/${name}`);
                 const resultData = await searchApi.json();
                 setProducts(resultData.products)
-                // console.log(resultData.products);
+                // console.log(resultData);
                 
             } catch (error) {
                 console.log("No products found...");
@@ -103,6 +105,48 @@ if (f === "Ships overnight") return shipment === "Ships overnight";
     
 
     // set filters all data or matches data - wither map all or matches? print onyl that
+
+
+    function addtoCart(id) {
+        const pID = id;
+        alert(pID);
+
+        if (pID) {
+            alert(users[0].username);
+            const searchResults = async () => {
+                try {
+                    const searchApi = await fetch(
+                        `https://dummyjson.com/products/${pID}`
+                    );
+                    const resultData = await searchApi.json();
+                    console.log(resultData);
+
+                    const cart = {
+                        id: resultData.id,
+                        title: resultData.title,
+                        price: resultData.price,
+                        img: resultData.thumbnail,
+                        stock: resultData.availabilityStatus,
+                        ship: resultData.shippingInformation,
+                    };
+                    console.log(cart.title);
+
+                    if (!users[0].favorite) users[0].favorite = [];
+
+                    users[0].favorite.push(cart);
+
+                    localStorage.setItem("users", JSON.stringify(users)); // object to json srting
+
+                    alert("hogya dd");
+                    console.log(users[0].favorite);
+                } catch (error) {
+                    console.log("No products found...");
+                }
+            };
+            searchResults();
+        }
+    }
+
 
 
   return (
@@ -194,7 +238,10 @@ if (f === "Ships overnight") return shipment === "Ships overnight";
                     <span className='text-black'>{f.discountPercentage}% off</span>
                 </p>
                 <p className='text-md'>{f.shippingInformation}</p>
-                <button className='text-md'>Add to cart</button>
+                <button 
+                onClick={(e)=> addtoCart(f.id)}
+
+                className='text-md'>Add to cart</button>
             </div>
         </div>
   ))

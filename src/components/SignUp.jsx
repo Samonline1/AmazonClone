@@ -3,22 +3,32 @@ import { useNavigate, useNavigation } from "react-router-dom";
 
 
 function SignUp() {
+
+  const [action, setAction] = useState(true)
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    favorite: [],
   });
 
 
   const [savedUser, setSavedUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
+    JSON.parse(localStorage.getItem("users")) || null
   );
+console.log(savedUser)
+
+
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
+          const users = JSON.parse(localStorage.getItem("users")) || [];
+
+
+    if (action === false) {
+      try {
       // Send fake request to DummyJSON
       const res = await fetch("https://dummyjson.com/users/add", {
         method: "POST",
@@ -26,21 +36,49 @@ function SignUp() {
         body: JSON.stringify({
           username: formData.username,
           password: formData.password,
+          favorite: formData.favorite,
         }),
       });
 
-      const data = await res.json();
+      const newUser = await res.json();
 
+      users.push(newUser)
       // Save user in localStorage
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("users", JSON.stringify(users));
 
       // Update UI
-      setSavedUser(data);
+      setSavedUser(newUser);
       alert("User added and saved locally!");
-      navigate(`/`)
+      navigate(`/`);
     } catch (err) {
       console.error("Error:", err);
     }
+    } else {
+      const findUser = users.find((u)=> u.username.toLowerCase().includes(formData.username.toLowerCase()) );
+      // console.log(findUser.username);
+      // console.log(users[0].username);
+      // console.log(formData.username);
+
+    const checkPass = users.find((u)=> u.password.toLowerCase().includes(formData.password.toLowerCase()) );
+console.log(checkPass.password);
+
+if (findUser && checkPass) {
+  alert("logged in!");
+      navigate(`/${findUser.username}`)
+    if (!users.logged) users.logged = [];
+    users.logged.push(findUser.username)
+
+localStorage.setItem("user", JSON.stringify(users))
+}
+
+    
+      
+      
+
+      
+    }
+
+    
   };
 
   const handleLogout = () => {
@@ -87,9 +125,10 @@ src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1
             />
             <button 
             className="w-full bg-yellow-700 rounded-xl "
-            type="submit">Continue</button>
+            type="submit">{action === true ? "login" : "Sign Up"}</button>
 
             <p>By continuing, you agree to Amazon's Conditions of Use and Privacy Notice.</p>
+            <p>Not Registered? <span className="text-blue-700 hover:text-blue-900" onClick={()=> setAction(!action)}>{action === true ? "SignUp" : "Login"}</span></p>
           </form>
         </div>
       ) : ( <button onClick={handleLogout}>Logout</button>
