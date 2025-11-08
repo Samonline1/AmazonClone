@@ -54,6 +54,12 @@ h1 {
   line-height: 1.1;
 }
 
+li{
+  color: rgb(218, 208, 208);
+    font-size: 14px;
+
+}
+
 button {
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
