@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import { Bounce } from "react-toastify";
+
 
 const SearchResults = () => {
     const { name } = useParams();
@@ -32,10 +35,8 @@ const SearchResults = () => {
 
     function addtoCart(id) {
         const pID = id;
-        alert(pID);
 
         if (pID) {
-            alert(users[0].username);
             const searchResults = async () => {
                 try {
                     const searchApi = await fetch(
@@ -60,8 +61,17 @@ const SearchResults = () => {
 
                     localStorage.setItem("users", JSON.stringify(users)); // object to json srting
 
-                    alert("hogya dd");
-                    console.log(users[0].favorite);
+  toast.success('Added to cart!', {
+position: "bottom-center",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: false,
+progress: undefined,
+theme: "light",
+transition: Bounce,
+});                    console.log(users[0].favorite);
                 } catch (error) {
                     console.log("No products found...");
                 }
@@ -71,19 +81,8 @@ const SearchResults = () => {
     }
 
     return (
-        <div className="h-full w-full m-0">
-            <div className="w-screen h-full flex justify-end">
-                <img
-                    src="https://m.media-amazon.com/images/G/31/img23/Wireless/nbshagun/16thJuly/Banner_1.gif"
-                    alt=""
-                    srcSet=""
-                />
-            </div>
+        <div className="h-full w-screen m-0">
 
-            <div>
-                <b>Shop by categrory </b>
-                {/* <a href="http://"></a> */}
-            </div>
 
             {products &&
                 products.length > 0 &&
@@ -127,7 +126,7 @@ const SearchResults = () => {
                             <p className="text-md">{product.shippingInformation}</p>
                             <button
                                 onClick={(e) => addtoCart(product.id)}
-                                className="text-md"
+                                className="text-md rounded-3xl"
                             >
                                 Add to cart
                             </button>

@@ -9,6 +9,8 @@ import Profile from "./components/Profile";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Layout from "./components/Layout";
+import { Toaster } from "react-hot-toast";
+
 
 
 

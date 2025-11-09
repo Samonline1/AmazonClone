@@ -3,17 +3,13 @@ import { SlLocationPin } from "react-icons/sl";
 import { BsSearch } from "react-icons/bs";
 import ReactFlagsSelect from "react-flags-select";
 import { LuShoppingCart } from "react-icons/lu";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { href, useNavigate } from "react-router-dom";
+import { FiMenu } from "react-icons/fi";
 
 const Navbar = () => {
   const users = JSON.parse(localStorage.getItem("users"));
-  //  console.log(users[0]);
-  //   const userDetails = users.find((u)=> u.username === username)
-  // // console.log(userDetails.username);
-  // const User = userDetails.username;
 
-  console.log(users[0].username);
-  const user = users[0].username;
+  const user = users && users[0]?.username;
 
   const [input, setInput] = useState("");
   const [selected, setSelected] = useState("IN");
@@ -48,17 +44,36 @@ const Navbar = () => {
     navigate(`/search/${search}`);
   };
 
+  const HandleProfile = () => {
+    setShow(false);
+
+    if (user) {
+      navigate(`/profile`);
+    } else {
+      navigate(`/login`);
+
+    }
+  };
+
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full ">
       {show && (
         <div
           className={`w-90 h-screen absolute z-50 bg-gray-800 text-white
     transition-opacity duration-300 ease-in-out
-    ${show ? "translate-x-0 opacity-100" : "opacity-0"}
-`}
+    ${show ? "translate-x-0 opacity-100" : "opacity-0"}`}
         >
+          <div className="flex absolute justify-end items-end p-2 right-[-60px] top-0 ">
+            <p
+              className="flex justify-center items-center p-3 border border-gray-200 h-10 w-10 rounded bg-black/50"
+              onClick={() => setShow(false)}
+            >
+              X
+            </p>
+          </div>
+
           <div
-            className="flex font-bold items-center flex h-13 w-full bg-gray-900 text-white px-10 gap-2 text-xl"
+            className="flex font-bold items-center flex h-13 w-full bg-gray-900 text-white px-10 gap-2 text-lg"
             onClick={() => navigate(`/profile`)}
           >
             <img
@@ -68,25 +83,23 @@ const Navbar = () => {
               srcset=""
             />
             <h3>Hello, {user || "Login"}</h3>
-            <p
-              className="flex justify-center items-center absolute right-[-50px] p-3 border h-10 w-10 rounded bg-black/50"
+            {/* <p
+              className="flex justify-center items-center right-[-50px] p-3 border h-10 w-10 rounded bg-black/50"
               onClick={() => setShow(false)}
             >
               X
-            </p>
+            </p> */}
           </div>
-          <div className="flex flex-col relative h-screen z-50 bg-white text-gray-900 p-10 w-full gap-5">
-            <b className="text-lg">Trending</b>
-            <a className="text-gray-500" href={`/category/toy`}>
-              Toy
+          <div className="flex flex-col relative h-screen z-50 bg-white text-gray-900 p-10 w-full gap-5 ">
+            <b className="text-lg ">Trending</b>
+            <a className="text-gray-500" href={`/category/smartphones`}>
+              Smartphones
             </a>
-            <a className="text-gray-500" href={`/category/toy`}>
-              Toy
+            <a className="text-gray-500 " href={`/category/womens-dresses`}>
+              Womens Dresses
             </a>
-            <a className="text-gray-500" href={`/category/toy`}>
-              Toy
-            </a>
-            <b className="text-lg">Shop by category</b>
+            <p className="mx-[-50px] w-90 border-t border-gray-300"></p>
+            <b className="text-lg ">Shop by category</b>
             {categories.splice(5, 10).map((category) => (
               <a
                 key={category}
@@ -101,30 +114,18 @@ const Navbar = () => {
       )}
 
       {/* main nav */}
-      <nav className="flex sticky top-0 z-20 h-full w-full p-4 items-center space-x-5 bg-black">
-        {/* <div className='flex w-full w-62 h-10' >
-         <img className='w-full h-full object-center flex-shrink-0' src="https://freelogopng.com/images/all_img/1688364164amazon-logo-transparent.png" alt="" srcSet="" /> 
-        </div> */}
-        {/* 
-        <div className="flex items-center">
- <img
-  src="https://freelogopng.com/images/all_img/1688364164amazon-logo-transparent.png"
-  alt="Amazon logo"
-  className="w-20 sm:w-24 md:w-28 lg:w-32 h-auto object-contain"
-/>
-</div> */}
-
-        <div className="flex items-center w-32 h-12">
+      <nav className="flex sticky top-0 z-20 h-18 p-4 lg:p-10 items-center justify-between space-x-3 bg-black">
+        <div className="flex items-center w-48 lg:w-27 h-8">
           <img
             onClick={() => navigate(`/`)}
             src="https://freelogopng.com/images/all_img/1688364164amazon-logo-transparent.png"
             alt="Amazon logo"
-            className="w-32 h-12 object-contain flex-shrink-0"
+            className=" w-full h-full"
           />
         </div>
 
-        <div className="w-55">
-          <p className="text-sm">Delivering to Mumbai</p>
+        <div className="text-[12px] flex-shrink-0 lg:text-[15px]">
+          <p className="">Delivering to Mumbai</p>
           <div className="flex w-full">
             <SlLocationPin />
             <p className="font-bold">Update location</p>
@@ -148,7 +149,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        <div className="flex w-100 space-x-3">
+        <div className="flex space-x-3">
           <div className="text-white ">
             <ReactFlagsSelect
               selected={selected}
@@ -167,30 +168,17 @@ const Navbar = () => {
               fullWidth={false}
               selectButtonClassName="!border-0 !bg-transparent !shadow-none hover:!bg-transparent focus:!outline-none !text-white"
             />
-
-            {/* <ReactFlagsSelect
-             className='w-20 ouline-none border-none'
-             selectButtonClassName="menu-flags-button"
-             fullWidth={false}
- placeholder="Select Language"           
-            showOptionLabel={false}
-            showSecondarySelectedLabel={false}
-            showSelectedLabel={false}
-            customLabels={"US"}
-    selected={selected}
-    onSelect={(code) => setSelected(code)}
-  /> */}
           </div>
-          <div>
-            <p onClick={() => navigate(`/login`)} className="text-sm ">
-              Hello, {user || "Login"}
+          <div className="text-[12px] lg:text-[15px]">
+            <p onClick={HandleProfile} className=" ">
+              {"Hello," + " " + user || "Login"}
             </p>
-            <p className="font-bold">Account & Lists</p>
+            <p className="font-bold">Account</p>
           </div>
-          <div>
+          {/* <div>
             <p className="text-sm">Returns</p>
             <p className="font-bold">& Orders</p>
-          </div>
+          </div> */}
           <div onClick={() => navigate(`/cart`)} className="text-[40px]">
             <LuShoppingCart />
           </div>
@@ -200,16 +188,11 @@ const Navbar = () => {
       {/* Category */}
 
       <nav className="flex items-center p-4 gap-4 bg-gray-900">
-        {/* <Link to={`/ok/${oka}`} className="link"
-      >
-       All
-      </Link> */}
-
-        {/* <a href={`/ok/${oka}`} className="text-white">
-  Go to
-</a> */}
-
-        <p className="text-white" onClick={() => setShow(true)}>
+        <p
+          className="text-white flex justify-center items-center gap-2"
+          onClick={() => setShow(true)}
+        >
+          <FiMenu />
           All
         </p>
         {categories.splice(0, 5).map((category) => (

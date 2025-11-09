@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useNavigate, useNavigation } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { Bounce } from "react-toastify";
 
 function SignUp() {
   const [action, setAction] = useState(true);
@@ -12,7 +14,6 @@ function SignUp() {
   const [savedUser, setSavedUser] = useState(
     JSON.parse(localStorage.getItem("users")) || null
   );
-  console.log(savedUser);
 
   const navigate = useNavigate();
 
@@ -20,6 +21,92 @@ function SignUp() {
     e.preventDefault();
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (formData.username === "" && formData.password === "") {
+      toast.error("Type something...", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+
+    if (formData.password && formData.password.length < 8) {
+      toast.error("Itna easy password", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+
+    if (!/[A-Z]/.test(formData.password && formData.password)) {
+      return toast.error("Uppercase missing (A-Z)!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+
+    if (!/[a-z]/.test(formData.password && formData.password)) {
+      return toast.error("Lowercase missing (a-z)!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+
+    if (!/[0-9]/.test(formData.password && formData.password)) {
+      return toast.error("Number missing (0-9)!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+
+    if (
+      !/[!@#$%^&*(),.?":{}|<>]/.test(formData.password && formData.password)
+    ) {
+      return toast.error("Special character missing (!, @, #, etc.)", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
 
     if (action === false) {
       try {
@@ -42,7 +129,8 @@ function SignUp() {
 
         // Update UI
         setSavedUser(newUser);
-        alert("User added and saved locally!");
+        // alert("User added and saved locally!");
+        toast.success("Login successful");
         navigate(`/`);
       } catch (err) {
         console.error("Error:", err);
@@ -58,15 +146,28 @@ function SignUp() {
       const checkPass = users.find((u) =>
         u.password.toLowerCase().includes(formData.password.toLowerCase())
       );
-      console.log(checkPass.password);
+      console.log(checkPass?.password);
 
       if (findUser && checkPass) {
-        alert("logged in!");
+        // alert("logged in!");
+        toast.success("Login successful");
         navigate(`/${findUser.username}`);
         if (!users.logged) users.logged = [];
         users.logged.push(findUser.username);
 
         localStorage.setItem("user", JSON.stringify(users));
+      } else if (formData.username) {
+        toast.error("User not found!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     }
   };
